@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>- Login</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="container login-container">
+    <h2>💻 LET'S LEARN HACKING 💻 </h2>
+    <p>Welcome to <strong> dark web</strong><br>
+    Please login to enter the hacking world.</p>
+
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <p id="loginMessage"></p>
+  </main>
+
+  <script>
+    const defaultUser = { username: "admin", password: "admin" };
+    let accounts = JSON.parse(localStorage.getItem("accounts")) || [defaultUser];
+
+    const loginForm = document.getElementById("loginForm");
+    const loginMessage = document.getElementById("loginMessage");
+
+    loginForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const user = accounts.find(acc => acc.username === username && acc.password === password);
+
+      if (user) {
+        window.location.href = "login.html";
+      } else {
+        accounts.push({ username, password });
+        localStorage.setItem("accounts", JSON.stringify(accounts));
+        loginMessage.textContent = "New account created! Please login again.";
+        loginMessage.style.color = "#00ff99";
+      }
+    });
+  </script>
+</body>
+</html>
